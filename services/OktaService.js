@@ -23,9 +23,6 @@ exports.profile = async function (userName) {
   let user;
   try{
     user = await client.getUser(userName);
-      // .then(user => {
-      //   console.log(user);
-      // });
   }
   catch(err)
   {
@@ -33,3 +30,27 @@ exports.profile = async function (userName) {
   }
   return(user);
 }
+
+exports.register = async function (firstname,lastname,email,password) {
+  console.log('Calling okta createUser()');
+  try {
+    await client.createUser({
+      profile: {
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        login: email,
+      },
+      credentials: {
+        password: {
+          value: password,
+        },
+      }
+    });
+  }
+  catch (err){
+    console.error("Could not complete the registeration for user: ", email);
+  }
+  return;
+}
+

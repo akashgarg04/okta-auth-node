@@ -7,48 +7,26 @@
 
 const oktaService = require('./OktaService');
 
-exports.register = function (body, callback) {
-var name = body.name;
-var email = body.email;
-var password = body.password;
+exports.register = async function (body, callback) {
+    var firstname = body.firstname;
+    var lastname = body.lastname;
+    var email = body.email;
+    var password = body.password;
 
-if (body.question.length <= 0 || 
-    body.answer.length <= 0   ||
-    name.length <= 0          ||
-    email.length <= 0         ||
-    password.length <= 0
-)
-{
-    return(500);
-}
-
-var attributeList = [];
-        
-var dataEmail = {
-    Name : 'email', 
-    Value : email
-};
-
-var dataPersonalName = {
-    Name : 'name', 
-    Value : name
-};
-
-var question = {
-    Name : 'custom:question', 
-    Value : body.question
-};
-
-var answer = {
-    Name : 'custom:answer', 
-    Value : body.answer
-};
-
-var failedcount = {
-    Name : 'custom:failattempts', 
-    Value : '0'
-};
-
+    if (firstname.length <= 0   ||
+        lastname.length <= 0    ||
+        email.length <= 0       ||
+        password.length <= 0 )
+    {
+        console.log("Invalid input for registration");
+        return(500);
+    }
+    else {
+        await oktaService.register(firstname,lastname,
+            email,password);
+        console.log("Registration successful for user: ", email);
+    }
+    callback();
 }
 
 

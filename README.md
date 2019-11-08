@@ -25,4 +25,15 @@ The following endpoints are defined and could be run
       email: "abc@xyz.com"
     }
     ```
-2) 
+
+2) Register a new User into Okta :  POST   http://localhost:3000/auth/register
+    ```
+    {
+      "firstname": "Hulk",
+      "lastname": "Banner",
+      "email": "theOtherGuy@marvel.com",
+      "password": "password"
+    }
+    ```
+
+3)  
