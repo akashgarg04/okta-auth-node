@@ -1,0 +1,8 @@
+{
+    "orgUrl": "ORG_URL",
+    "clientId": "CLIENT_ID",
+    "clientSecret": "CLIENT_SECRET",
+    "hostUrl": "HOST_URL",
+    "randomSecret": "SECRET",
+    "apiToken": "USER_PROFILE_TOKEN"
+}
