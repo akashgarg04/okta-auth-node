@@ -64,9 +64,18 @@ exports.validate = function(token, callback) {
 }
 
 
-exports.profile = function (body, callback) {
+exports.profile = async function (body, callback) {
     console.log('Inside Okta dashboard');
-    let user = oktaService.profile(body.email);
+    let user = await oktaService.profile(body.email);
+    if (user === undefined)
+    {
+        console.error("User not found");
+    }
+    else {
+        console.log("user ID: " , user.id);
+        console.log("user name: " , user.profile.firstName, " " ,  user.profile.lastName);
+        console.log("User email: ", user.profile.email);
+    }
     callback(user);
 }
 

@@ -22,14 +22,14 @@ exports.profile = async function (userName) {
   console.log('Calling okta getuser()');
   let user;
   try{
-    await client.getUser(userName)
-      .then(user => {
-        console.log(user);
-      });
+    user = await client.getUser(userName);
+      // .then(user => {
+      //   console.log(user);
+      // });
   }
   catch(err)
   {
-    console.error("No user found",err);
+    console.error("No user found with username: ", userName);
   }
   return(user);
 }
