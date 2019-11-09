@@ -43,7 +43,7 @@ exports.validate = function(token, callback) {
 
 
 exports.profile = async function (body, callback) {
-    console.log('Inside Okta dashboard');
+    console.log('Inside AuthService - profile');
     let user = await oktaService.profile(body.email);
     if (user === undefined)
     {
@@ -64,14 +64,19 @@ var userName = body.email;
 }
 
 
-exports.forgotPassword = function (body, callback) {
-var userName = body.email;
-
+exports.forgotPassword = async function (body, callback) {
+    console.log('Inside AuthService - forgotpassword');
+    var userName = body.email;
+    let user = await oktaService.forgotPassword(userName);
+    if (user === undefined)
+    {
+        console.error("User not found:", userName);
+    }
+    callback(user);
 }
 
 
 exports.changePassword = function (body, callback) {
-var userName = body.email;
-var oldpassword = body.oldpassword;
-
+    var userName = body.email;
+    var oldpassword = body.oldpassword;
 }

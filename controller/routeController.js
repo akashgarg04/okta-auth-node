@@ -1,7 +1,7 @@
 var authService = require('../services/AuthService');
 
 exports.register = function(req, res){
-    let register = authService.register(req.body, function(err, result){
+    authService.register(req.body, function(err, result){
     if(err)
         res.send(err);
     res.send(result);
@@ -46,7 +46,7 @@ exports.logout = function(req, res){
 
 
 exports.forgotpassword = function(req, res){
-    let forgotpassword = authService.forgotPassword(req.body,function(err, result){
+    authService.forgotPassword(req.body,function(err, result){
         if(err)
             res.send(err.message);
         res.send(result);

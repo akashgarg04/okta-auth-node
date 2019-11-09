@@ -54,3 +54,24 @@ exports.register = async function (firstname,lastname,email,password) {
   return;
 }
 
+exports.forgotPassword = async function (userName) {
+  console.log('Calling okta resetPassword()');
+  let user;
+  try{
+    user = await client.getUser(userName);
+    if (user != null){
+      await user.resetPassword();
+    }
+  }
+  catch(err)
+  {
+    console.error(err);
+    if (user===undefined){
+      console.error("No user found with username: ", userName);
+    }
+    else {
+      console.error("Unable to reset the password for the user : ", userName);
+    }
+  }
+  return(user);
+}
