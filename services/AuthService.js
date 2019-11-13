@@ -29,18 +29,29 @@ exports.register = async function (body, callback) {
     callback();
 }
 
-
-exports.login = function (body, callback) {
-var userName = body.email;
-var password = body.password;
-
+exports.login = async function (body, callback) {
+    var userName = body.email;
+    var password = body.password;
+    var session;
+    let token = await oktaService.login(userName,password);
+    if (token === undefined)
+    {
+        console.error("Unable to login user :", userName);
+    }
+    else {
+        session = await oktaService.createSession(token.sessionToken);
+    }
+    callback(session);
 }
 
-
-exports.validate = function(token, callback) {
-
+exports.validate = async function(token, callback) {
+    let data = await oktaService.verifyToken(token);
+    if (data === undefined)
+    {
+        console.error("Token could not be verified");
+    }
+    callback(data);
 }
-
 
 exports.profile = async function (body, callback) {
     console.log('Inside AuthService - profile');
@@ -57,12 +68,11 @@ exports.profile = async function (body, callback) {
     callback(user);
 }
 
-
-exports.logout = function (body, callback) {
-var userName = body.email;
-
+exports.logout = async function (body, callback) {
+    var userName = body.email;
+    await oktaService.logout();
+    callback();
 }
-
 
 exports.forgotPassword = async function (body, callback) {
     console.log('Inside AuthService - forgotpassword');
@@ -75,8 +85,13 @@ exports.forgotPassword = async function (body, callback) {
     callback(user);
 }
 
-
-exports.changePassword = function (body, callback) {
+exports.changePassword = async function (body, callback) {
     var userName = body.email;
     var oldpassword = body.oldpassword;
+    let user = await oktaService.changePassword(userName,oldpassword);
+    if (user === undefined)
+    {
+        console.error("User not found:", userName);
+    }
+    callback(user);
 }
