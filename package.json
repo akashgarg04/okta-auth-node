@@ -10,6 +10,7 @@
     "@okta/okta-sdk-nodejs": "^1.1.0",
     "body-parser": "^1.19.0",
     "config": "^3.2.2",
+    "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.5.1",

@@ -71,6 +71,7 @@ exports.profile = async function (body, callback) {
 exports.logout = async function (body, callback) {
     var userName = body.email;
     await oktaService.logout();
+    console.log("User Logged out successfully",userName );
     callback();
 }
 
@@ -94,4 +95,18 @@ exports.changePassword = async function (body, callback) {
         console.error("User not found:", userName);
     }
     callback(user);
+}
+
+exports.lockUser = async function (body, callback) {
+    var userName = body.email;
+    await oktaService.lockUser(userName);
+    console.log("User locked-out successfully : ", userName );
+    callback();
+}
+
+exports.deleteUser = async function (body, callback) {
+    var userName = body.email;
+    await oktaService.deleteUser(userName);
+    console.log("User deleted successfully : ", userName );
+    callback();
 }

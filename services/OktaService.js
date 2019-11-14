@@ -33,6 +33,7 @@ exports.profile = async function (userName) {
   let user;
   try{
     user = await client.getUser(userName);
+    console.log(user);
   }
   catch(err)
   {
@@ -59,7 +60,7 @@ exports.register = async function (firstname,lastname,email,password) {
     });
   }
   catch (err){
-    console.error("Could not complete the registeration for user: ", email);
+    console.error("Could not complete the registeration for user: ", email, err);
   }
   return;
 }
@@ -135,7 +136,17 @@ exports.login = async function (username, password)
 {
   try {
     const  sessionToken  = await oktaAuthClient.signIn({ username, password });
-    console.log(sessionToken);
+    //   .then(function(transaction) {
+    //     console.log(transaction);
+    //     if (transaction.status === 'SUCCESS') {
+    //       oktaAuthClient.session.setCookieAndRedirect(transaction.sessionToken); // Sets a cookie on redirect
+    //     } else {
+    //       throw 'We cannot handle the ' + transaction.status + ' status';
+    //     }
+    //   })
+    // .fail(function(err) {
+    //   console.error(err);
+    // });
     console.log(sessionToken.sessionToken);
     return(sessionToken);
   }
@@ -148,7 +159,13 @@ exports.login = async function (username, password)
 exports.logout = async function ()
 {
   try {
-    await oktaAuthClient.signOut();
+    await oktaAuthClient.signOut()
+    .then(function() {
+      console.log('successfully logged out');
+    })
+    .fail(function(err) {
+      console.error(err);
+    });
   }
   catch(err)
   {
@@ -157,31 +174,46 @@ exports.logout = async function ()
   return;
 }
 
-// exports.verifyToken = async function (token)
-// {
-//   try {
-//     const  isVerifiedToken  = await oktaJwtVerifier.verifyAccessToken(token, 'api://default');
-//     console.log(isVerifiedToken);
-//     return(isVerifiedToken);
-//   }
-//   catch(err)
-//   {
-//     console.error("Could not validate token", err);
-//   }
-// }
+exports.verifyToken = async function (token)
+{
+  try {
+    const  isVerifiedToken  = await oktaJwtVerifier.verifyAccessToken(token, 'api://default');
+    console.log(isVerifiedToken);
+    return(isVerifiedToken);
+  }
+  catch(err)
+  {
+    console.error("Could not validate token", err);
+  }
+}
 
 exports.lockUser = async function (userName)
 {
   try {
-    const user = await oktaAuthClient.getUser(userName);
+    const user = await client.getUser(userName);
+    console.log(user);
     await user.deactivate()
-      .then(() => console.log('User has been deactivated'))
-      //.then(() => user.delete())
-      //.then(() => console.log('User has been deleted'));
+      .then(() => console.log('User has been deactivated'));
   }
   catch(err)
   {
-    console.error("Could not deactivate username: ", username);
+    console.error("Could not deactivate username: ", userName);
+    console.log (err);
+  }
+  return;
+}
+
+exports.deleteUser = async function (userName)
+{
+  try {
+    const user = await client.getUser(userName);
+    await user.delete()
+      .then(() => console.log('User has been deleted'));
+  }
+  catch(err)
+  {
+    console.error("Could not delete username: ", userName)
+    console.log (err);
   }
   return;
 }

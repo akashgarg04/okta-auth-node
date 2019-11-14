@@ -10,5 +10,7 @@ router.get('/auth/profile', authController.user_profile);
 router.post('/auth/logout', authController.logout);
 router.post('/auth/forgotpassword', authController.forgotpassword);
 router.post('/auth/changepassword', authController.changepassword);
+router.post('/auth/lockuser', authController.lockuser);
+router.post('/auth/deleteuser', authController.deleteuser);
 
 module.exports = router;
