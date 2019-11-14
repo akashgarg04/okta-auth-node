@@ -44,13 +44,15 @@ exports.login = async function (body, callback) {
     callback(session);
 }
 
-exports.validate = async function(token, callback) {
-    let data = await oktaService.verifyToken(token);
-    if (data === undefined)
+exports.resetPassword = async function (body, callback) {
+    console.log('Inside AuthService - resetPassword');
+    var userName = body.email;
+    let user = await oktaService.resetPassword(userName);
+    if (user === undefined)
     {
-        console.error("Token could not be verified");
+        console.error("User not found:", userName);
     }
-    callback(data);
+    callback(user);
 }
 
 exports.profile = async function (body, callback) {
@@ -68,22 +70,37 @@ exports.profile = async function (body, callback) {
     callback(user);
 }
 
+exports.createsession = async function (body, callback) {
+    var token = body.token;
+    let session = await oktaService.createsession(token);
+    if (session === undefined)
+    {
+        console.error("Unable to create a session");
+    }
+    callback(session);
+}
+
+exports.deactivateUser = async function (body, callback) {
+    var userName = body.email;
+    await oktaService.deactivateUser(userName);
+    console.log("User locked-out successfully : ", userName );
+    callback();
+}
+
+exports.deleteUser = async function (body, callback) {
+    var userName = body.email;
+    await oktaService.deleteUser(userName);
+    console.log("User deleted successfully : ", userName );
+    callback();
+}
+
+
+// The following endpoints are still in-progress
 exports.logout = async function (body, callback) {
     var userName = body.email;
     await oktaService.logout();
     console.log("User Logged out successfully",userName );
     callback();
-}
-
-exports.forgotPassword = async function (body, callback) {
-    console.log('Inside AuthService - forgotpassword');
-    var userName = body.email;
-    let user = await oktaService.forgotPassword(userName);
-    if (user === undefined)
-    {
-        console.error("User not found:", userName);
-    }
-    callback(user);
 }
 
 exports.changePassword = async function (body, callback) {
@@ -97,16 +114,11 @@ exports.changePassword = async function (body, callback) {
     callback(user);
 }
 
-exports.lockUser = async function (body, callback) {
-    var userName = body.email;
-    await oktaService.lockUser(userName);
-    console.log("User locked-out successfully : ", userName );
-    callback();
-}
-
-exports.deleteUser = async function (body, callback) {
-    var userName = body.email;
-    await oktaService.deleteUser(userName);
-    console.log("User deleted successfully : ", userName );
-    callback();
+exports.validate = async function(token, callback) {
+    let data = await oktaService.verifyToken(token);
+    if (data === undefined)
+    {
+        console.error("Token could not be verified");
+    }
+    callback(data);
 }

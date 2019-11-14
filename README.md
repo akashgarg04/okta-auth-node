@@ -4,7 +4,8 @@ This app is to implement okta endpoints for user authentication service using no
 Follow the steps below:
 
  - Clone the repo - `git clone https://github.com/akashgarg04/okta-auth-node.git `
- - create an .env file `touch .env`
+ - Create a developers account at ` https://developer.okta.com/signup/ `
+ - Create an .env file `touch .env` Add the following variables into the `.env` file.
       ```
       export ORG_URL=https://dev-<####>.okta.com
       export CLIENT_ID=
@@ -17,16 +18,9 @@ Follow the steps below:
  - run `source .env` to load the environmental variables
  - run `nodemon`
 
-The following endpoints are defined and could be run 
+The following endpoints are implemented and could be run using postman
 
-1) Get User Info from Okta :  GET   http://localhost:3000/auth/profile
-    ```
-    {
-      email: "abc@xyz.com"
-    }
-    ```
-
-2) Register a new User into Okta :  POST   http://localhost:3000/auth/register
+#) *Register* a new User into Okta :  POST   http://localhost:3000/auth/register
     ```
     {
       "firstname": "Hulk",
@@ -36,4 +30,45 @@ The following endpoints are defined and could be run
     }
     ```
 
-3)  
+#) *Login* an existing user using Okta : POST   http://localhost:3000/auth/login
+    ```
+    {
+      "email": "abc@xyz.com",
+      "password": "password"
+    }
+    ```
+
+#) *Reset password* for a User :  POST   http://localhost:3000/auth/resetPassword
+    ```
+    {
+      "email": "abc@xyz.com"
+    }
+    ```
+
+#) Get *User profile* info from Okta :  GET   http://localhost:3000/auth/profile
+    ```
+    {
+      "email": "abc@xyz.com"
+    }
+    ```
+
+#) *Create a Session* for a logged-in user using the session token :  POST   http://localhost:3000/auth/createsession
+    ```
+    {
+      "token": "qwert12345"
+    }
+    ```
+
+#) *Deactivate a user* in Okta : POST   http://localhost:3000/auth/deactivateUser
+    ```
+    {
+      "email": "abc@xyz.com"
+    }
+    ```
+
+#) *Delete a user* in Okta : POST   http://localhost:3000/auth/deleteuser
+    ```
+    {
+      "email": "abc@xyz.com"
+    }
+    ```
