@@ -32,16 +32,8 @@ exports.register = async function (body, callback) {
 exports.login = async function (body, callback) {
     var userName = body.email;
     var password = body.password;
-    var session;
     let token = await oktaService.login(userName,password);
-    if (token === undefined)
-    {
-        console.error("Unable to login user :", userName);
-    }
-    else {
-        session = await oktaService.createSession(token.sessionToken);
-    }
-    callback(session);
+    callback(token);
 }
 
 exports.resetPassword = async function (body, callback) {
@@ -72,7 +64,7 @@ exports.profile = async function (body, callback) {
 
 exports.createsession = async function (body, callback) {
     var token = body.token;
-    let session = await oktaService.createsession(token);
+    let session = await oktaService.createSession(token);
     if (session === undefined)
     {
         console.error("Unable to create a session");
@@ -99,7 +91,7 @@ exports.deleteUser = async function (body, callback) {
 exports.logout = async function (body, callback) {
     var userName = body.email;
     await oktaService.logout();
-    console.log("User Logged out successfully",userName );
+    console.log("User deactivate successfully",userName );
     callback();
 }
 
