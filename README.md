@@ -20,7 +20,8 @@ Follow the steps below:
 
 The following endpoints are implemented and could be run using postman
 
-#) *Register* a new User into Okta :  POST   http://localhost:3000/auth/register
+1) *Register* a new User into Okta :  POST   http://localhost:3000/auth/register
+  
     ```
     {
       "firstname": "Hulk",
@@ -30,7 +31,8 @@ The following endpoints are implemented and could be run using postman
     }
     ```
 
-#) *Login* an existing user using Okta : POST   http://localhost:3000/auth/login
+2) *Login* an existing user using Okta : POST   http://localhost:3000/auth/login
+
     ```
     {
       "email": "abc@xyz.com",
@@ -38,35 +40,40 @@ The following endpoints are implemented and could be run using postman
     }
     ```
 
-#) *Reset password* for a User :  POST   http://localhost:3000/auth/resetPassword
+3) *Reset password* for a User :  POST   http://localhost:3000/auth/resetPassword
+
     ```
     {
       "email": "abc@xyz.com"
     }
     ```
 
-#) Get *User profile* info from Okta :  GET   http://localhost:3000/auth/profile
+4) Get *User profile* info from Okta :  GET   http://localhost:3000/auth/profile
+
     ```
     {
       "email": "abc@xyz.com"
     }
     ```
 
-#) *Create a Session* for a logged-in user using the session token :  POST   http://localhost:3000/auth/createsession
+5) *Create a Session* for a logged-in user using the session token :  POST   http://localhost:3000/auth/createsession
+
     ```
     {
       "token": "qwert12345"
     }
     ```
 
-#) *Deactivate a user* in Okta : POST   http://localhost:3000/auth/deactivateUser
+6) *Deactivate a user* in Okta : POST   http://localhost:3000/auth/deactivateUser
+
     ```
     {
       "email": "abc@xyz.com"
     }
     ```
 
-#) *Delete a user* in Okta : POST   http://localhost:3000/auth/deleteuser
+7) *Delete a user* in Okta : POST   http://localhost:3000/auth/deleteuser
+
     ```
     {
       "email": "abc@xyz.com"
